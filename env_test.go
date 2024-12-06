@@ -1,4 +1,4 @@
-package configclient
+package config
 
 import (
 	"reflect"

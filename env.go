@@ -1,5 +1,5 @@
-// The config package defines functions for loading configs from a remote config server
-package configclient
+// GoConfig is inspired by sprin-boot config module.It allows developers to use external configs.
+package config
 
 import (
 	"encoding/json"
@@ -37,7 +37,7 @@ type ConfigSettings struct {
 
 var settings ConfigSettings
 
-func init() {
+func Load() {
 	settings = ConfigSettings{
 		Profiles:  strings.Split(os.Getenv("app.config.profiles.active"), ","),
 		AppName:   os.Getenv("app.name"),
