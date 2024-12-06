@@ -1,5 +1,5 @@
 // The config package defines functions for loading configs from a remote config server
-package configs
+package configclient
 
 import (
 	"encoding/json"
@@ -14,7 +14,6 @@ import (
 )
 
 // Config represents the configuration object
-
 type Config struct {
 	Name            string           `json:"name"`
 	Profiles        []string         `json:"profiles"`
