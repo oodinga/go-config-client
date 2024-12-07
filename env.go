@@ -1,4 +1,7 @@
-// GoConfig is inspired by sprin-boot config module.It allows developers to use external configs.
+// GoConfig is inspired by the Spring Boot configuration module,
+// allowing Go developers to load external configuration files from a remote config server.
+// It provides an easy way to manage and access application settings, particularly in distributed systems.
+
 package goconfig
 
 import (
@@ -54,15 +57,19 @@ func Load() {
 // the application. If an error occours, it is reported via #reportError(err error) function
 func loadConfigs() {
 	for _, profile := range settings.Profiles {
-		var err error
-		config, err := fetchConfigs(profile)
-
-		if err != nil {
-			reportError(err)
-			continue
-		}
-		setEnvVariables(config)
+		go loadProfile(profile)
 	}
+}
+
+func loadProfile(profile string) {
+	var err error
+	config, err := fetchConfigs(profile)
+
+	if err != nil {
+		go reportError(err)
+		return
+	}
+	go setEnvVariables(config)
 }
 
 // Helper function used to check log errors that occurr during fetching of configs.

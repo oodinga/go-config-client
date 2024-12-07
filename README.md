@@ -30,7 +30,7 @@ These variables can be set in two ways:
 1. [Directly as environment variables](#setting-environment-variables).
 2. [Using a `.env` file](#using-a-env-file).
 
----
+
 
 ### Setting Environment Variables
 
@@ -61,7 +61,7 @@ app.config.optional="true"
 > **Note:** Customize these values based on your application's configuration on the config server.
 
 
----
+
 
 ### Loading Configuration in Your Go Application
 
@@ -103,7 +103,7 @@ func main() {
 ```
 GoConfig will automatically load the configuration from the server and set them as environment variables for your application.
 
----
+
 
 ## Example Configuration File
 
