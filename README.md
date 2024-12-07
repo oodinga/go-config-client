@@ -5,7 +5,7 @@ Config client is a go package that allows go developers to use spring-boot like 
 
 ## Installation
 ``` shell
-go get github.com/oodinga/goconfig/client
+go get github.com/oodinga/goconfig
 ```
 
 ## Usage
@@ -56,7 +56,7 @@ import (
     "log"
     "os"
 
-    config "github.com/oodinga/goconfig/client"
+    config "github.com/oodinga/goconfig"
 )
 
 func main(){
@@ -72,7 +72,7 @@ import (
     "log"
     "os"
 
-    _ "github.com/oodinga/goconfig/client/autoload"
+    _ "github.com/oodinga/goconfig/autoload"
 )
 
 func main(){
@@ -105,7 +105,7 @@ import (
     "log"
     "os"
 
-    _ "github.com/oodinga/goconfig/client/autoload"
+    _ "github.com/oodinga/goconfig/autoload"
 )
 
 func main(){
