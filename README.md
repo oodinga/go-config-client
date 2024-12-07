@@ -1,7 +1,7 @@
-[![Go Reference](https://pkg.go.dev/badge/github.com/oodinga/go-config-client@v0.1.1.svg)](https://pkg.go.dev/github.com/oodinga/configclient@v0.1.2)
+[![Go Reference](https://pkg.go.dev/badge/github.com/oodinga/goconfig@v0.4.3.svg)](https://pkg.go.dev/github.com/oodinga/goconfig@v0.4.3)
 
-# ConfigClient
-Config client is a go package that allows go developers to use spring-boot like config client to load configs exposed via config servers. 
+# GoConfig
+GoConfig is a go package that allows go developers to use spring-boot like config client to load configs exposed via config servers. 
 
 ## Installation
 ``` shell
@@ -9,7 +9,7 @@ go get github.com/oodinga/goconfig
 ```
 
 ## Usage
-The following env variables are required when using configClient
+The following env variables are required.
 ```shell
 app.name
 app.config.profiles.active
@@ -35,7 +35,7 @@ export app.config.optional="true"
 ```
 
 ### Using .env file
-Config client variables can also be loaded from .env file. This is an extension of [godotenv](https://pkg.go.dev/github.com/joho/godotenv@v1.5.1)
+Config variables can also be loaded from .env file. This is an extension of [godotenv](https://pkg.go.dev/github.com/joho/godotenv@v1.5.1)
 
 In your .env file set the following values.
 
@@ -47,7 +47,7 @@ app.config.optional="true"
 ```
 > NOTE: Set values according to your application setting on your config server.
 
-Once these variable are set, all you need to do is to import config client as shown.
+Once these variable are set, all you need to do is to import **goconfig** as shown.
 
 ```go
 package main
@@ -80,7 +80,7 @@ func main(){
 }
 ```
 
-ConfigClient will autoload the configs from the set config server and set them as environment variables to be used by your application.
+GoConfig will autoload the configs from the set config server and set them as environment variables to be used by your application.
 
 ### Example config file
 When using sprin-boot config server, You can use a db or git as the source of the configuration. A sample yaml file can be set as below.
