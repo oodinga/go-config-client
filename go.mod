@@ -1,4 +1,4 @@
-module github.com/oodinga/goconfig/client
+module github.com/oodinga/goconfig
 
 go 1.19
 

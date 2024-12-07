@@ -1,5 +1,5 @@
 // GoConfig is inspired by sprin-boot config module.It allows developers to use external configs.
-package config
+package goconfig
 
 import (
 	"encoding/json"
