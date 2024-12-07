@@ -37,6 +37,8 @@ type ConfigSettings struct {
 
 var settings ConfigSettings
 
+// The Load function loads configs from the remote config server. It should be called as early as possible in your application.
+// The call is also done by the autoload package. This is to allow ease of use.
 func Load() {
 	settings = ConfigSettings{
 		Profiles:  strings.Split(os.Getenv("app.config.profiles.active"), ","),
