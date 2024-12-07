@@ -1,43 +1,55 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/oodinga/goconfig@v0.4.3.svg)](https://pkg.go.dev/github.com/oodinga/goconfig@v0.4.3)
 
 # GoConfig
-GoConfig is a go package that allows go developers to use spring-boot like config client to load configs exposed via config servers. 
+
+**GoConfig** is a Go package that enables developers to seamlessly load configurations from Spring Boot-style config servers. It simplifies the process of managing environment-specific configurations for Go applications.
+
+---
 
 ## Installation
-``` shell
+
+Install the package using `go get`:
+
+```bash
 go get github.com/oodinga/goconfig
 ```
 
-## Usage
-The following env variables are required.
-```shell
-app.name
-app.config.profiles.active
-app.config.server.url
-app.config.optional
-```
+---
+## Getting Started
 
-These can be set in two ways.
+### Required Environment Variables
 
-1. [Set environment variables where you are running your application](#setting-env-variables)
-2. [Add .env file in the root of your go service](#using-env-file)
+GoConfig requires the following environment variables to be set for proper functionality:
 
-### Setting env variables
-Follow instructions for setting ENVIROMENT_VARIABLES for your OS.
+- `app.name` – Name of your application.
+- `app.config.profiles.active` – Comma separated list of active profiles (e.g., `dev`, `prod`, etc.).
+- `app.config.server.url` – URL of the configuration server.
+- `app.config.optional` – Whether loading configurations is optional (`true` or `false`).
 
-Example
-For linux/MacOs
-```shell
+These variables can be set in two ways:
+1. [Directly as environment variables](#setting-environment-variables).
+2. [Using a `.env` file](#using-a-env-file).
+
+---
+
+### Setting Environment Variables
+
+Set the environment variables according to your operating system. 
+
+#### Example (Linux/MacOS):
+
+```bash
 export app.name="example-service"
 export app.config.profiles.active="dev"
 export app.config.server.url="https://localhost:8080"
 export app.config.optional="true"
 ```
 
-### Using .env file
-Config variables can also be loaded from .env file. This is an extension of [godotenv](https://pkg.go.dev/github.com/joho/godotenv@v1.5.1)
+### Using a `.env` File
 
-In your .env file set the following values.
+Alternatively, you can store environment variables in a `.env` file in the root of your Go application. GoConfig extends [godotenv](https://pkg.go.dev/github.com/joho/godotenv) for loading `.env` files.
+
+#### Example `.env` File:
 
 ```go
 app.name="example-service"
@@ -45,9 +57,15 @@ app.config.profiles.active="dev"
 app.config.server.url="https://localhost:8080"
 app.config.optional="true"
 ```
-> NOTE: Set values according to your application setting on your config server.
 
-Once these variable are set, all you need to do is to import **goconfig** as shown.
+> **Note:** Customize these values based on your application's configuration on the config server.
+
+
+---
+
+### Loading Configuration in Your Go Application
+
+#### Standard Import
 
 ```go
 package main
@@ -59,44 +77,15 @@ import (
     config "github.com/oodinga/goconfig"
 )
 
-func main(){
+func main() {
     config.Load()
-    log.Print("Service port: ", os.GetEnv("server.port"))
+    log.Println("Service port:", os.Getenv("server.port"))
 }
 ```
 
-This can be simplified by importing the autoload package as shown below.
+#### Auto-Loading Configuration
 
-```go
-import (
-    "log"
-    "os"
-
-    _ "github.com/oodinga/goconfig/autoload"
-)
-
-func main(){
-    log.Print("Service port: ", os.GetEnv("server.port"))
-}
-```
-
-GoConfig will autoload the configs from the set config server and set them as environment variables to be used by your application.
-
-### Example config file
-When using sprin-boot config server, You can use a db or git as the source of the configuration. A sample yaml file can be set as below.
-
-application.yaml
-```yaml
-server:
-    port: 8080
-db:
-    username: name
-    password: ******
-    url: localhost:3600
-```
-
-To use these configs 
-Using this in your go app.
+For a simplified approach, import the `autoload` package. This eliminates the need for explicitly calling `config.Load()`:
 
 ```go
 package main
@@ -108,14 +97,69 @@ import (
     _ "github.com/oodinga/goconfig/autoload"
 )
 
-func main(){
-    log.Print("Service port: ", os.GetEnv("server.port"))
-    log.Print("Database name: ", os.GetEnv("db.name"))
-    log.Print("Database url: ", os.GetEnv("db.url"))
+func main() {
+    log.Println("Service port:", os.Getenv("server.port"))
+}
+```
+GoConfig will automatically load the configuration from the server and set them as environment variables for your application.
+
+---
+
+## Example Configuration File
+
+When using a Spring Boot configuration server, configurations can be stored in a database or a Git repository. A sample `application.yaml` file might look like this:
+
+#### `application.yaml`:
+
+```yaml
+server:
+    port: 8080
+db:
+    username: user
+    password: ******
+    url: localhost:3306
+```
+This configuration file can be hosted on your Spring Boot config server. It includes values such as the server port and database connection details.
+
+
+### Accessing Configuration in Go
+
+Once the config server is set up, you can access the loaded configuration values in your Go application like this:
+
+```go
+package main
+
+import (
+    "log"
+    "os"
+
+    _ "github.com/oodinga/goconfig/autoload"
+)
+
+func main() {
+    log.Println("Service port:", os.Getenv("server.port"))
+    log.Println("Database username:", os.Getenv("db.username"))
+    log.Println("Database URL:", os.Getenv("db.url"))
 }
 ```
 
-This should log your values to the terminal
+This code will retrieve and print configuration values that have been loaded from the Spring Boot config server and set as environment variables.
 
-Refer to [spring documentation](https://docs.spring.io/spring-cloud-config/docs/current/reference/html/) on how to set a spring config server.
+The output will display the values retrieved from the configuration server, such as:
+
+```bash
+Service port: 8080
+Database username: user
+Database URL: localhost:3306
+```
+
+This allows your Go application to dynamically load configuration values without the need to manually set them within your code.
+
+---
+## Additional Resources
+
+- Refer to the [Spring Cloud Config documentation](https://docs.spring.io/spring-cloud-config/docs/current/reference/html/) to set up a Spring Boot config server.
+- Visit the [GoDoc page](https://pkg.go.dev/github.com/oodinga/goconfig@v0.4.3) for API details.
+- Learn more about loading and managing environment variables in Go with the [godotenv package](https://pkg.go.dev/github.com/joho/godotenv).
+- Explore the [Go Modules documentation](https://golang.org/doc/go1.11#modules) to better understand how Go handles dependencies.
 
